@@ -30,19 +30,3 @@ jobs:
             echo "Error: No JAR file found in target/"
             exit 1
           fi
-
-      - name: Upload JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-jar
-          path: target/*.jar
-          if-no-files-found: error  # Fail if no JAR is found
-
-      - name: Download JAR (wait a few seconds)
-        uses: actions/download-artifact@v3
-        with:
-          name: app-jar
-          path: ./downloaded-jars
-
-      - name: List downloaded files
-        run: ls -l ./downloaded-jars
