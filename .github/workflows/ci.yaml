@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write  # Required for artifact upload/download
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,5 +24,25 @@ jobs:
         run: mvn clean install
 
       - name: Verify JAR exists
-        run: ls -l target/*.jar
+        run: |
+          ls -la target/  # Debug: List all files in target/
+          if [ ! -f target/*.jar ]; then
+            echo "Error: No JAR file found in target/"
+            exit 1
+          fi
 
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-jar
+          path: target/*.jar
+          if-no-files-found: error  # Fail if no JAR is found
+
+      - name: Download JAR (wait a few seconds)
+        uses: actions/download-artifact@v3
+        with:
+          name: app-jar
+          path: ./downloaded-jars
+
+      - name: List downloaded files
+        run: ls -l ./downloaded-jars
