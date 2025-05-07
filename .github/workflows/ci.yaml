@@ -25,17 +25,12 @@ jobs:
         with:
           name: app-jar
           path: target/*.jar
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build  # This makes sure 'deploy' runs after 'build'
-    steps:
       - name: Download JAR
         uses: actions/download-artifact@v3
         with:
           name: app-jar
           path: ./downloaded-jars
-
       - name: List files
         run: ls -l ./downloaded-jars
+
 
