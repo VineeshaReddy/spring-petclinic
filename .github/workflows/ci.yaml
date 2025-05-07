@@ -23,18 +23,3 @@ jobs:
       - name: Verify JAR exists
         run: ls -l target/*.jar
 
-      - name: Upload JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-jar
-          path: target/*.jar
-          if-no-files-found: error  # This will fail if no JARs are found
-          
-      - name: Download JAR
-        uses: actions/download-artifact@v3
-        with:
-          name: app-jar
-          path: ./downloaded-jars
-          
-      - name: List downloaded files
-        run: ls -l ./downloaded-jars
