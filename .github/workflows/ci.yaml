@@ -35,3 +35,11 @@ jobs:
         with:
           name: maven-web-application
           path: target/*.jar
+          
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: maven-web-application
+          path: /opt
+
+          
